@@ -95,7 +95,7 @@ def nndetails(NN,input_size,*args):
         # layer types comparison and assigning layer names to the correct layer
         for i in range(len(layer_type_forward)):
             if layer_type_forward[i] != layer_type_init[i]:
-                layer_name_forward.insert(i,'')
+                layer_name.insert(i,'')
                 layer_type_init.insert(i,'')
         
     except RuntimeError:
@@ -117,7 +117,7 @@ def nndetails(NN,input_size,*args):
     t.hrules = FRAME
     t.align = "c"
 
-    for p in range(size(layer_type)):
+    for p in range(size(layer_type_forward)):
         t.add_row([layer_name[p],layer_type_forward[p],input_sizes[p],output_sizes[p],memory[p],weight_size[p],weights[p],bias[p]])
         
     total_weights = sum(num for num in weights if isinstance(num,numbers.Number))
