@@ -1,6 +1,6 @@
 # nndetails
 
-Getting the Neural Network layers, memory and parameters in PyTorch. The output is a table with these contents and it will print the table in a .txt file. Additionally, the filename can be specified.
+Getting the Neural Network layers, memory and parameters in PyTorch. The output is a table with these contents and it will print the table in a .txt file in the current working directory. Additionally, the filename can be specified.
 
 ## Example Usage with PyTorch
 
