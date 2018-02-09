@@ -38,3 +38,6 @@ VGG | (1,3,224,224)
 
 Most neural networks are defined for a specific input size or a range of input sizes, therefore the input size must be known before trying to execute this function. 
 
+# Bugs
+
+For predefined models in resnet50, resnet101, and resnet152, there are 2 additional layers of Conv2d and BatchNorm2d between layer1.0.bn3 and layer1.0.relu. # TO FIX
