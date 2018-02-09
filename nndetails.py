@@ -27,11 +27,11 @@ def nndetails(NN,input_size,*args):
     weight_size = []
     weights = []
     bias = []
-    layer_type = []
+    layer_type_forward = [] # layers in the forward function
     
     # Local Variables
     layer_name = []
-    layer_type2 = []
+    layer_type_init = [] # layers defined in __init__
 
     # The forward hook function
     def printnorm(self, input, output):
@@ -43,7 +43,7 @@ def nndetails(NN,input_size,*args):
         nonlocal weight_size
         nonlocal weights
         nonlocal bias
-        nonlocal layer_type
+        nonlocal layer_type_forward
         
         # Input Sizes, Output Sizes, and Memory
         input_sizes.append(input[0].size())
@@ -71,9 +71,7 @@ def nndetails(NN,input_size,*args):
             bias.append('')
             
         # Layer Type
-        layer_type.append(self.__class__.__name__)
-        
-        
+        layer_type_forward.append(self.__class__.__name__)
         
 
     for count, (name, i) in enumerate(list(NN.named_modules())):
@@ -85,7 +83,7 @@ def nndetails(NN,input_size,*args):
             # Get the layer names and type for later comparison
             # This is because, sometimes the network defined in __init__ does not specify all the layers that are in the forward function
             # such as in torchvision.models.resnet
-            layer_type2.append(i.__class__.__name__)
+            layer_type_init.append(i.__class__.__name__)
             layer_name.append(name)
             
 
@@ -95,10 +93,10 @@ def nndetails(NN,input_size,*args):
         NN(Variable(torch.randn(input_size)))
         
         # layer types comparison and assigning layer names to the correct layer
-        for i in range(len(layer_type)):
-            if layer_type[i] != layer_type2[i]:
-                layer_name.insert(i,'')
-                layer_type2.insert(i,'')
+        for i in range(len(layer_type_forward)):
+            if layer_type_forward[i] != layer_type_init[i]:
+                layer_name_forward.insert(i,'')
+                layer_type_init.insert(i,'')
         
     except RuntimeError:
         # If there is an error do the following: Remove forward hooks
@@ -120,14 +118,14 @@ def nndetails(NN,input_size,*args):
     t.align = "c"
 
     for p in range(size(layer_type)):
-        t.add_row([layer_name[p],layer_type[p],input_sizes[p],output_sizes[p],memory[p],weight_size[p],weights[p],bias[p]])
+        t.add_row([layer_name[p],layer_type_forward[p],input_sizes[p],output_sizes[p],memory[p],weight_size[p],weights[p],bias[p]])
         
     total_weights = sum(num for num in weights if isinstance(num,numbers.Number))
     total_bias = sum(num for num in bias if isinstance(num,numbers.Number))
     
     t.add_row(['-----','-----','-----','-----','-----','-----','-----','-----'])
     t.add_row(['','','','Total Memory (Forward & Backward)','%d*2' %(sum(memory)),'Total (Weights, Bias)',total_weights,total_bias])
-    t.add_row(['Total Number of Layers',len(layer_type),'','Total Memory/Image','%.2fMB' %(sum(memory)*2/1000000),'Total Parameters',total_weights + total_bias,''])
+    t.add_row(['Total Number of Layers',len(layer_type_forward),'','Total Memory/Image','%.2fMB' %(sum(memory)*2/1000000),'Total Parameters',total_weights + total_bias,''])
     print(t)
 
     # Saving to text file
