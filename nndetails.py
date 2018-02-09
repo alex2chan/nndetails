@@ -8,7 +8,8 @@ from torch.autograd import Variable
 """Gets the details of the neural network defined by nn.Module
 Args:
     NN:          is a class of nn.Module
-    input_size:  must be a tuple (enclosed in brackets) of 4 dimensions, e.g. (1,3,224,224) <-- use this for most predefined models in torchvision.models
+    input_size:  must be a tuple (enclosed in brackets) of 4 dimensions:
+                 e.g. (1,3,224,224) <-- use this for most predefined models in torchvision.models
     *args:       is the filename in .txt which only accepts one value of type string, e.g. "test" or 'test'.
                  The default is the class's name which may be overwritten when different models use the same class
 
