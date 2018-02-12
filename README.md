@@ -40,4 +40,4 @@ Most neural networks are defined for a specific input size or a range of input s
 
 ## Bugs
 
-For predefined models in torchvision.models of resnet50, resnet101, and resnet152, there are 2 additional layers of Conv2d and BatchNorm2d between layer1.0.bn3 and layer1.0.relu. # TO FIX
+For predefined models in torchvision.models of resnet50, resnet101, and resnet152, the layer names do not match. The forward layers and the layers predefined in __init__ are different in torchvision.models.resnet
