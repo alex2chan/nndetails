@@ -139,6 +139,7 @@ def nndetails(NN,input_size,*args):
     
     with open(fpath,'w') as file:
         file.write(table_txt)
+        print('Neural Network Details saved to: ' + fpath)
 
     # Remove all forward hooks
     for name, i in list(NN.named_modules()):
