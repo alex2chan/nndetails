@@ -36,8 +36,10 @@ VGG | (1,3,224,224)
 
 ## Limitations
 
-Most neural networks are defined for a specific input size or a range of input sizes, therefore the input size must be known before trying to execute this function. 
+Most neural networks are defined for a specific input size or a range of input sizes, therefore the input size must be known before trying to execute this function.
+
+The layers can be taken from torch.nn and torch.nn.functional. The function, nndetails, can only take the layers from torch.nn not from torch.nn.functional. Therefore not all the layers will be detected. Additionally, it only takes the forward function because it uses a forward hook to get the layers. Layers which are defined in \_\_init\_\_ are sometimes not all present in the forward function, depending on how the network is defined.
 
 ## Bugs
 
-For predefined models in torchvision.models of resnet50, resnet101, and resnet152, the layer names do not match. The forward layers and the layers predefined in __init__ are different in torchvision.models.resnet
+For predefined models in torchvision.models of resnet50, resnet101, and resnet152, the layer names do not match. The forward layers and the layers predefined in \_\_init\_\_ are different in torchvision.models.resnet
