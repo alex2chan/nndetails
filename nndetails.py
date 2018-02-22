@@ -179,10 +179,10 @@ def nndetails(neural_network, input_size, *args):
     # Saving to text file
     table_txt = table.get_string()
 
-    if args is not None:
-        fpath = os.getcwd() + '\\' + args[0] + '.txt'
+    if not args:
+        fpath = os.getcwd() + '/' + neural_network.__class__.__name__ + ' Details.txt'
     else:
-        fpath = os.getcwd() + '\\' + neural_network.__class__.__name__ + ' Details.txt'
+        fpath = os.getcwd() + '/' + args[0] + '.txt'
 
     with open(fpath, 'w') as file:
         file.write(table_txt)
